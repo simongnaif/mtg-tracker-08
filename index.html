@@ -433,10 +433,6 @@
 
     </div>
 
-    <button onclick="toggleDeleteMode()" id="deleteBtn">
-      🗑 Borrar comandantes
-    </button>
-
     <div class="card">
       <h2>Ranking jugadores</h2>
       <div id="stats"></div>
@@ -444,7 +440,15 @@
 
     <div class="card">
       <h2>Ranking comandantes</h2>
+
       <div id="commanderStats"></div>
+
+      <div style="text-align:center; margin-top:15px;">
+        <button onclick="toggleDeleteMode()" id="deleteBtn">
+          🗑 Borrar comandantes
+        </button>
+      </div>
+
     </div>
 
     <div class="card">
@@ -520,9 +524,9 @@
 
       function getPlayerImage(name) {
         const images = {
-          "Tato": { src: "Tatosinfondo.png", pos: "center 10%" },
-          "Carlos": { src: "carlosnigrosinfondo.png", pos: "center 15%" },
-          "Simón": { src: "simonsinfondo.png", pos: "center 20%" }
+          "Tato": { src: "tato1.png", pos: "center 10%" },
+          "Carlos": { src: "carlos1.png", pos: "center 15%" },
+          "Simón": { src: "simon1.png", pos: "center 20%" }
         };
 
         return images[name] || { src: "", pos: "center" };
