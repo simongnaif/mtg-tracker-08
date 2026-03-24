@@ -217,6 +217,12 @@
       border: none;
     }
 
+    .selectedDelete {
+      outline: 3px solid red;
+      transform: scale(1.05);
+      opacity: 0.7;
+    }
+
     button {
       background: linear-gradient(45deg, #6c5ce7, #a29bfe);
       color: white;
@@ -384,13 +390,16 @@
 
     #suggestions {
       position: absolute;
-      top: 45px;
+      top: 100%;
+      /* justo debajo del input */
+      left: 0;
+      width: 100%;
       background: #222;
       border-radius: 8px;
       max-height: 150px;
       overflow: auto;
-      width: 250px;
-      z-index: 10;
+      z-index: 999;
+      /* para que quede por encima */
     }
   </style>
 </head>
@@ -411,7 +420,11 @@
       <input id="playerName" placeholder="Jugador">
       <button onclick="addPlayer()">+</button>
 
-      <input id="commanderName" placeholder="Comandante" onkeyup="searchCommander()">
+      <div style="position:relative;">
+        <input id="commanderName" placeholder="Comandante" onkeyup="searchCommander()">
+        <div id="suggestions"></div>
+      </div>
+
       <button onclick="addCommander()">+</button>
 
       <button onclick="saveGame()" style="background:linear-gradient(45deg,#00b894,#55efc4);">
@@ -419,6 +432,10 @@
       </button>
 
     </div>
+
+    <button onclick="toggleDeleteMode()" id="deleteBtn">
+      🗑 Borrar comandantes
+    </button>
 
     <div class="card">
       <h2>Ranking jugadores</h2>
@@ -446,6 +463,35 @@
       let players = JSON.parse(localStorage.getItem("players")) || [];
       let commanders = JSON.parse(localStorage.getItem("commanders")) || [];
       let games = JSON.parse(localStorage.getItem("games")) || [];
+      let deleteMode = false;
+      let selectedCommanders = new Set();
+
+      function toggleDeleteMode() {
+        deleteMode = !deleteMode;
+        selectedCommanders.clear();
+
+        document.getElementById("deleteBtn").textContent = deleteMode
+          ? "✅ Confirmar borrado"
+          : "🗑 Borrar comandantes";
+
+        if (!deleteMode) return;
+
+        // Si ya está activo y se pulsa otra vez → borrar
+        if (deleteMode && selectedCommanders.size > 0) {
+          if (!confirm("¿Borrar comandantes seleccionados?")) return;
+
+          commanders = commanders.filter(c => !selectedCommanders.has(c.id));
+
+          save();
+          render();
+
+          deleteMode = false;
+          selectedCommanders.clear();
+          document.getElementById("deleteBtn").textContent = "🗑 Borrar comandantes";
+        }
+
+        render();
+      }
 
       function clearHistory() {
         if (!confirm("¿Borrar TODO el historial?")) return;
@@ -606,6 +652,7 @@
           let p = players.find(x => x.name === name);
           let cmdId = c.querySelector("select").value;
           let cmd = commanders.find(c => c.id == cmdId);
+          if (!cmd) return;
           let win = c.querySelector("input").checked;
 
           if (win) {
@@ -689,7 +736,7 @@
           let wr = total ? ((c.wins / total) * 100).toFixed(1) : 0;
 
           topContainer.innerHTML += `
-      <div class="commanderCard">
+      <div class="commanderCard ${selectedCommanders.has(c.id) ? 'selectedDelete' : ''}" onclick="selectCommander(${c.id})">
         <img src="${c.image}">
         <div>${c.name}</div>
         <div>${c.wins}W / ${c.losses}L</div>
@@ -709,7 +756,7 @@
           let wr = total ? ((c.wins / total) * 100).toFixed(1) : 0;
 
           grid.innerHTML += `
-      <div class="commanderCard">
+      <div class="commanderCard ${selectedCommanders.has(c.id) ? 'selectedDelete' : ''}" onclick="selectCommander(${c.id})">
         <img src="${c.image}">
         <div style="font-size:12px">${c.name}</div>
         <div style="font-size:11px">${wr}%</div>
@@ -748,7 +795,16 @@
 
         game.players.forEach(p => {
           let player = players.find(x => x.id === p.playerId) || players.find(x => x.name === p.player);
-          let cmd = commanders.find(c => c.id === p.commanderId) || commanders.find(c => c.name === p.commander);
+          let cmd = commanders.find(c => c.id == p.commanderId);
+
+          if (!cmd && p.commander) {
+            cmd = commanders.find(c => c.name === p.commander);
+          }
+
+          if (cmd) {
+            if (p.result) cmd.wins = Math.max(0, cmd.wins - 1);
+            else cmd.losses = Math.max(0, cmd.losses - 1);
+          }
 
           if (player) {
             if (p.result) player.wins = Math.max(0, player.wins - 1);
@@ -800,7 +856,8 @@
         clearTimeout(debounceTimer);
         debounceTimer = setTimeout(() => {
           const query = commanderName.value;
-          if (query.length < 2) { suggestions.innerHTML = ""; return; }
+          const box = document.getElementById("suggestions");
+          if (query.length < 2) { box.innerHTML = ""; return; }
           fetch(`https://api.scryfall.com/cards/autocomplete?q=${encodeURIComponent(query)}`)
             .then(r => r.json())
             .then(data => {
@@ -816,6 +873,18 @@
               });
             });
         }, 250);
+      }
+
+      function selectCommander(id) {
+        if (!deleteMode) return;
+
+        if (selectedCommanders.has(id)) {
+          selectedCommanders.delete(id);
+        } else {
+          selectedCommanders.add(id);
+        }
+
+        render();
       }
 
       render();
