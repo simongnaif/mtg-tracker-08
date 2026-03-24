@@ -1,641 +1,721 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-<meta charset="UTF-8" />
-<title>Commander Tracker Pro</title>
-<style>
-body{
-  font-family:Arial;
-  background: radial-gradient(circle at top, #1a1a2e, #0f0f0f);
-  color:#eee;
-  padding:20px;
-  max-width:1100px;
-  margin:auto;
-}
+  <meta charset="UTF-8" />
+  <title>Commander Tracker Pro</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: radial-gradient(circle at top, #1a1a2e, #0f0f0f);
+      color: #eee;
+      padding: 20px;
+      max-width: 1100px;
+      margin: auto;
+    }
 
-h1{text-align:center;margin-bottom:25px}
+    h1 {
+      text-align: center;
+      margin-bottom: 25px
+    }
 
-.logoContainer{
-  display:flex;
-  justify-content:center;
-  margin-bottom:20px;
-  animation: floatLogo 3s ease-in-out infinite;
-}
+    .logoContainer {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+      animation: floatLogo 3s ease-in-out infinite;
+    }
 
-.logoContainer img{
-  width:420px;
-  max-width:100%;
-  height:auto;
-  filter: drop-shadow(0 0 10px rgba(0,0,0,0.8));
-  animation: floatLogo 3s ease-in-out infinite;
-}
+    .logoContainer img {
+      width: 420px;
+      max-width: 100%;
+      height: auto;
+      filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.8));
+      animation: floatLogo 3s ease-in-out infinite;
+    }
 
-@keyframes floatLogo{
-  0%,100%{ transform: translateY(0px); }
-  50%{ transform: translateY(-5px); }
-}
+    @keyframes floatLogo {
 
-.avatarContainer{
-  position: relative;
-  width: 100%;
-  height: 500px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  overflow:hidden;
-  border-radius:12px;
-  overflow:hidden;
-  margin-left: -15px;
-  margin-right: -15px;
-  width: 100%;
-  border-radius:12px 12px 0 0;
-  margin: 0
-}
+      0%,
+      100% {
+        transform: translateY(0px);
+      }
 
-.playerAvatar{
-  position:absolute;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  z-index:1;
-  object-position: center 0%;
-  transform: scale(1.2);
-}
+      50% {
+        transform: translateY(-5px);
+      }
+    }
 
-.cardImage{
-  position:absolute;
-  width:100px;
-  z-index:2;
-  transform: translateY(-20px) scale(1.05);
-  filter: drop-shadow(0 0 10px rgba(0,0,0,0.8));
-  transition: transform 0.2s;
-  transform: translateY(110px) scale(1.1);
-  filter: drop-shadow(0 0 15px rgba(0,0,0,1));
-}
+    .avatarContainer {
+      position: relative;
+      width: 100%;
+      height: 500px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-left: -15px;
+      margin-right: -15px;
+      width: 100%;
+      border-radius: 12px 12px 0 0;
+      margin: 0;
+      position: relative;
+    }
 
-.cardImage:hover{
-  transform: translateY(5px) scale(1.15);
-}
+    .playerAvatar {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 1;
+      object-position: center 0%;
+      transform: scale(1.2);
+    }
 
-.playerNameBar{
-  margin-top:10px;
-  background:#111827;
-  padding:10px;
-  border-radius:10px;
-  font-weight:bold;
-  font-size:20px; /* 🔥 más grande */
-  text-align:center;
-  width:100%;
-  margin:0;
-  border-radius:0;
-  box-shadow: 0 0 10px rgba(0,0,0,0.5);
-}
+    .cardImage {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, 40%) scale(1.1);
+      /* 🔥 centrado real */
 
-.card{
-  background:#1c1c2b;
-  padding:20px;
-  border-radius:16px;
-  margin-bottom:20px;
-  box-shadow:0 0 15px rgba(0,0,0,0.5);
-}
+      width: 120px;
+      z-index: 2;
+      filter: drop-shadow(0 0 15px rgba(0, 0, 0, 1));
+      transition: transform 0.2s;
+      animation: floatCard 3s ease-in-out infinite;
+    }
 
-.playerCard select{
-  width:100%;
-  text-align:center;
-  margin:0 auto;
-  display:block;
-}
+    .cardImage:hover {
+      transform: translate(-50%, 40%) scale(1.2) rotate(2deg);
+    }
 
-.playerCard{
-  position:relative;
-  overflow:visible;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-}
+    .playerNameBar {
+      margin-top: 10px;
+      background: #111827;
+      padding: 14px 10px;
+      font-weight: bold;
+      font-size: 24px;
+      /* 🔥 más grande */
+      text-align: center;
+      width: 100%;
+      margin: 0;
+      border-radius: 0;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      position: relative;
+      z-index: 3;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-body{
-  font-family:Arial;
-  background: url("wallpaper.png") no-repeat center center fixed;
-  background-size: cover;
-  color:#eee;
-  padding:20px;
-  max-width:1100px;
-  margin:auto;
-}
+    .card {
+      background: #1c1c2b;
+      padding: 20px;
+      border-radius: 16px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    }
 
-input,select,button{
-  padding:10px;
-  margin:5px;
-  border-radius:8px;
-  border:none;
-}
+    .playerCard select {
+      width: 100%;
+      text-align: center;
+      margin: 0 auto;
+      display: block;
+    }
 
-button{
-  background:linear-gradient(45deg,#6c5ce7,#a29bfe);
-  color:white;
-  cursor:pointer;
-  font-weight:bold;
-}
+    .playerCard {
+      position: relative;
+      overflow: visible;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-button:hover{transform:scale(1.05)}
+    body {
+      font-family: Arial;
+      background: url("wallpaper.png") no-repeat center center fixed;
+      background-size: cover;
+      color: #eee;
+      padding: 20px;
+      max-width: 1100px;
+      margin: auto;
+    }
 
-#playersList{
-  display:grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap:15px;
-}
+    input,
+    select,
+    button {
+      padding: 10px;
+      margin: 5px;
+      border-radius: 8px;
+      border: none;
+    }
 
-.playerCard{
-  padding:0;
-  overflow:hidden;
-}
+    button {
+      background: linear-gradient(45deg, #6c5ce7, #a29bfe);
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+    }
 
-.playerCard{
-  background:#2a2a3d;
-  border-radius:12px;
-  padding:15px;
-  text-align:center;
-  position:relative;
-  padding:0;
-  overflow:hidden;
-}
+    button:hover {
+      transform: scale(1.05)
+    }
 
-.playerCard > img{
-  width:100px;
-  border-radius:10px;
-}
+    #playersList {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 15px;
+    }
 
-.playerCardContent{
-  padding:0px;
-}
+    .playerCard {
+      padding: 0;
+      overflow: hidden;
+    }
 
-.playerName{font-size:18px;font-weight:bold}
+    .playerNameBar {
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
 
-.podium{
-  display:grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap:15px;
-  margin-top:10px;
-}
+    .playerNameBar input {
+      background: transparent;
+      border: none;
+      color: white;
+      text-align: center;
+      font-weight: bold;
+      font-size: 24px;
+      width: 100%;
+      outline: none;
+    }
 
-.podiumCard{
-  background:#2a2a3d;
-  border-radius:12px;
-  padding:15px;
-  text-align:center;
-  box-shadow:0 0 10px rgba(0,0,0,0.5);
-}
+    .playerCard {
+      background: #2a2a3d;
+      border-radius: 12px;
+      padding: 15px;
+      text-align: center;
+      position: relative;
+      padding: 0;
+      overflow: hidden;
+    }
 
-.podiumCard:nth-child(1){
-  border:2px solid gold;
-}
+    .playerCard>img {
+      width: 100px;
+      border-radius: 10px;
+    }
 
-.podiumCard:nth-child(2){
-  border:2px solid silver;
-}
+    .playerCardContent {
+      padding: 0px;
+    }
 
-.podiumCard:nth-child(3){
-  border:2px solid #cd7f32;
-}
+    .playerName {
+      font-size: 18px;
+      font-weight: bold
+    }
 
-.medal{
-  font-size:24px;
-  margin-bottom:5px;
-}
+    .podium {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin-top: 10px;
+    }
 
-.name{
-  font-weight:bold;
-  font-size:16px;
-}
+    .podiumCard {
+      background: #2a2a3d;
+      border-radius: 12px;
+      padding: 15px;
+      text-align: center;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
 
-.score{
-  font-size:14px;
-}
+    .podiumCard:nth-child(1) {
+      border: 2px solid gold;
+    }
 
-.wr{
-  font-size:12px;
-  opacity:0.7;
-}
+    .podiumCard:nth-child(2) {
+      border: 2px solid silver;
+    }
 
-.winner input{transform:scale(1.5)}
+    .podiumCard:nth-child(3) {
+      border: 2px solid #cd7f32;
+    }
 
-.row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+    .medal {
+      font-size: 24px;
+      margin-bottom: 5px;
+    }
 
-.small{font-size:12px;opacity:.7}
+    .name {
+      font-weight: bold;
+      font-size: 16px;
+    }
 
-#suggestions{
-  background:#222;
-  border-radius:8px;
-  margin-top:5px;
-  max-height:150px;
-  overflow:auto;
-}
+    .score {
+      font-size: 14px;
+    }
 
-#suggestions div:hover{background:#444}
+    .wr {
+      font-size: 12px;
+      opacity: 0.7;
+    }
 
-.topBar{
-  display:flex;
-  justify-content:space-between;
-  gap:20px;
-  margin-bottom:20px;
-}
+    .winner input {
+      transform: scale(1.5)
+    }
 
-.topItem{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  flex:1;
-}
+    .row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
 
-.topItem input{
-  flex:1;
-}
+    .row input {
+      width: 140px;
+    }
 
-#suggestions{
-  position:absolute;
-  top:45px;
-  background:#222;
-  border-radius:8px;
-  max-height:150px;
-  overflow:auto;
-  width:250px;
-  z-index:10;
-}
+    .row button {
+      min-width: 40px;
+    }
 
-</style>
+    .small {
+      font-size: 12px;
+      opacity: .7
+    }
+
+    #suggestions {
+      background: #222;
+      border-radius: 8px;
+      margin-top: 5px;
+      max-height: 150px;
+      overflow: auto;
+    }
+
+    #suggestions div:hover {
+      background: #444
+    }
+
+    .topBar {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .topItem {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex: 1;
+    }
+
+    .topItem input {
+      flex: 1;
+    }
+
+    #suggestions {
+      position: absolute;
+      top: 45px;
+      background: #222;
+      border-radius: 8px;
+      max-height: 150px;
+      overflow: auto;
+      width: 250px;
+      z-index: 10;
+    }
+  </style>
 </head>
+
 <body>
 
-<div class="logoContainer">
-  <img src="logo.png" alt="Commander Tracker">
-</div>
-
-<div class="topBar">
-
-  <div class="topItem">
-    <input id="playerName" placeholder="Jugador">
-    <button onclick="addPlayer()">+ Jugador</button>
+  <div class="logoContainer">
+    <img src="logo.png" alt="Commander Tracker">
   </div>
 
-  <div class="topItem">
-    <input id="commanderName" placeholder="Comandante" oninput="searchCommander()">
-    <button onclick="addCommander()">+ Cmd</button>
-    <div id="suggestions"></div>
-  </div>
+  <div class="card">
+    <h2>Partida</h2>
 
-</div>
+    <div id="playersList"></div>
 
-<div class="card">
-<h2>Partida</h2>
-<div id="playersList"></div>
-<button onclick="saveGame()">Guardar partida</button>
-</div>
+    <div class="row" style="justify-content:center; margin-top:15px;">
 
-<div class="card">
-<h2>Ranking jugadores</h2>
-<div id="stats"></div>
-</div>
+      <input id="playerName" placeholder="Jugador">
+      <button onclick="addPlayer()">+</button>
 
-<div class="card">
-<h2>Ranking comandantes</h2>
-<div id="commanderStats"></div>
-</div>
+      <input id="commanderName" placeholder="Comandante" onkeyup="searchCommander()">
+      <button onclick="addCommander()">+</button>
 
-<div class="card">
-<h2>Historial</h2>
-<button onclick="clearHistory()">🧨 Borrar todo</button>
-<div id="history"></div>
-</div>
+      <button onclick="saveGame()" style="background:linear-gradient(45deg,#00b894,#55efc4);">
+        Guardar partida
+      </button>
 
-<div class="card">
-<h2>Datos</h2>
-<button onclick="exportData()">Exportar</button>
-<input type="file" onchange="importData(event)">
-</div>
+    </div>
 
-<script>
-let players = JSON.parse(localStorage.getItem("players"))||[];
-let commanders = JSON.parse(localStorage.getItem("commanders"))||[];
-let games = JSON.parse(localStorage.getItem("games"))||[];
+    <div class="card">
+      <h2>Ranking jugadores</h2>
+      <div id="stats"></div>
+    </div>
 
-function clearHistory(){
-  if(!confirm("¿Borrar TODO el historial?")) return;
+    <div class="card">
+      <h2>Ranking comandantes</h2>
+      <div id="commanderStats"></div>
+    </div>
 
-  players.forEach(p=>{
-    p.wins = 0;
-    p.losses = 0;
-  });
+    <div class="card">
+      <h2>Historial</h2>
+      <button onclick="clearHistory()">🧨 Borrar todo</button>
+      <div id="history"></div>
+    </div>
 
-  commanders.forEach(c=>{
-    c.wins = 0;
-    c.losses = 0;
-  });
+    <div class="card">
+      <h2>Datos</h2>
+      <button onclick="exportData()">Exportar</button>
+      <input type="file" onchange="importData(event)">
+    </div>
 
-  games = [];
+    <script>
+      let players = JSON.parse(localStorage.getItem("players")) || [];
+      let commanders = JSON.parse(localStorage.getItem("commanders")) || [];
+      let games = JSON.parse(localStorage.getItem("games")) || [];
 
-  save();
-  render();
-}
+      function clearHistory() {
+        if (!confirm("¿Borrar TODO el historial?")) return;
 
-function getPlayerImage(name){
-  const images = {
-    "Tato": {src:"Tatosinfondo.png", pos:"center 10%"},
-    "Carlos": {src:"carlosnigrosinfondo.png", pos:"center 15%"},
-    "Simón": {src:"simonsinfondo.png", pos:"center 20%"}
-  };
+        players.forEach(p => {
+          p.wins = 0;
+          p.losses = 0;
+        });
 
-  return images[name] || {src:"", pos:"center"};
-}
+        commanders.forEach(c => {
+          c.wins = 0;
+          c.losses = 0;
+        });
 
-function recalcStats(){
-  // reset
-  players.forEach(p=>{
-    p.wins = 0;
-    p.losses = 0;
-  });
+        games = [];
 
-  commanders.forEach(c=>{
-    c.wins = 0;
-    c.losses = 0;
-  });
-
-  // recalcular desde historial
-  games.forEach(g=>{
-    g.players.forEach(p=>{
-      let player = players.find(x => x.name === p.player);
-      let cmd = commanders.find(c => c.name === p.commander);
-
-      if(player){
-        if(p.result) player.wins++;
-        else player.losses++;
+        save();
+        render();
       }
 
-      if(cmd){
-        if(p.result) cmd.wins++;
-        else cmd.losses++;
+      function getPlayerImage(name) {
+        const images = {
+          "Tato": { src: "Tatosinfondo.png", pos: "center 10%" },
+          "Carlos": { src: "carlosnigrosinfondo.png", pos: "center 15%" },
+          "Simón": { src: "simonsinfondo.png", pos: "center 20%" }
+        };
+
+        return images[name] || { src: "", pos: "center" };
       }
-    });
-  });
-}
 
-function save(){
-localStorage.setItem("players",JSON.stringify(players));
-localStorage.setItem("commanders",JSON.stringify(commanders));
-localStorage.setItem("games",JSON.stringify(games));
-}
+      function recalcStats() {
+        // reset
+        players.forEach(p => {
+          p.wins = 0;
+          p.losses = 0;
+        });
 
-function addPlayer(){
-let name=playerName.value;
-if(!name)return;
-players.push({id:Date.now(),name,wins:0,losses:0});
-save();render();
-}
+        commanders.forEach(c => {
+          c.wins = 0;
+          c.losses = 0;
+        });
 
-function addCommander(){
-  let name = commanderName.value;
-  if(!name) return;
+        // recalcular desde historial
+        games.forEach(g => {
+          g.players.forEach(p => {
+            let player = players.find(x => x.name === p.player);
+            let cmd = commanders.find(c => c.name === p.commander);
 
-  fetch(`https://api.scryfall.com/cards/named?fuzzy=${encodeURIComponent(name)}`)
-    .then(r => r.json())
-    .then(d => {
-      let image = "";
-      if(d.image_uris){ image = d.image_uris.normal; }
-      else if(d.card_faces && d.card_faces[0].image_uris){ image = d.card_faces[0].image_uris.normal; }
+            if (player) {
+              if (p.result) player.wins++;
+              else player.losses++;
+            }
 
-      commanders.push({id: Date.now(),name: d.name,image,wins:0,losses:0});
-      save();render();
-    })
-    .catch(() => alert("No encontrado"));
-}
+            if (cmd) {
+              if (p.result) cmd.wins++;
+              else cmd.losses++;
+            }
+          });
+        });
+      }
 
-function render(){
-recalcStats();
-let container=document.getElementById("playersList");
-container.innerHTML="";
+      function save() {
+        localStorage.setItem("players", JSON.stringify(players));
+        localStorage.setItem("commanders", JSON.stringify(commanders));
+        localStorage.setItem("games", JSON.stringify(games));
+      }
 
-players.slice(0,3).forEach(p=>{
-  let card=document.createElement("div");
-  card.className="playerCard";
+      function addPlayer() {
+        let name = playerName.value;
+        if (!name) return;
+        players.push({ id: Date.now(), name, wins: 0, losses: 0 });
+        save(); render();
+      }
 
-  let select=document.createElement("select");
+      function addCommander() {
+        let name = commanderName.value;
+        if (!name) return;
 
-  commanders.forEach(c=>{
-    let o=document.createElement("option");
-    o.value=c.id;
-    o.textContent=c.name;
-    select.appendChild(o);
-  });
+        fetch(`https://api.scryfall.com/cards/named?fuzzy=${encodeURIComponent(name)}`)
+          .then(r => r.json())
+          .then(d => {
+            let image = "";
+            if (d.image_uris) { image = d.image_uris.normal; }
+            else if (d.card_faces && d.card_faces[0].image_uris) { image = d.card_faces[0].image_uris.normal; }
 
-  let win=document.createElement("input");
-  win.type="radio";
-  win.name="winner";
-  win.value=p.id;
+            commanders.push({ id: Date.now(), name: d.name, image, wins: 0, losses: 0 });
+            save(); render();
+          })
+          .catch(() => alert("No encontrado"));
+      }
 
-let data = getPlayerImage(p.name);
+      function updatePlayerName(i, name) {
+        players[i].name = name;
+      }
 
-card.innerHTML = `
-  <div class="avatarContainer">
-    <img class="playerAvatar" src="${data.src}" style="object-position:${data.pos}">
-    <img class="cardImage" src="">
+      function render() {
+        recalcStats();
+        let container = document.getElementById("playersList");
+        container.innerHTML = "";
+
+        players.slice(0, 3).forEach((p, i) => {
+
+          let data = getPlayerImage(p.name);
+
+          container.innerHTML += `
+  <div class="playerCard">
+
+    <div class="avatarContainer">
+      <img class="playerAvatar" src="${data.src}" style="object-position:${data.pos}">
+      <img id="card-${i}" class="cardImage" src="">
+    </div>
+
+    <div class="playerNameBar">
+      <input 
+        value="${p.name}" 
+        onchange="updatePlayerName(${i}, this.value)"
+        style="background:none;border:none;color:white;text-align:center;font-weight:bold;width:100%"
+      >
+    </div>
+
+    <select onchange="updateCommander(${i}, this.value)">
+  ${commanders.map(c => `
+    <option value="${c.id}" ${p.commander == c.id ? "selected" : ""}>
+      ${c.name}
+    </option>
+  `).join("")}
+</select>
+
+    <div>
+      🏆 <input type="radio" name="winner" value="${p.id}">
+    </div>
+
   </div>
-
-  <div class="playerNameBar">${p.name}</div>
 `;
 
-let img = card.querySelector(".cardImage");
+          let cmd = commanders.find(c => c.id == p.commander);
+          if (cmd) {
+            requestAnimationFrame(() => {
+              let img = document.getElementById(`card-${i}`);
+              if (img) img.src = cmd.image;
+            });
+          }
 
-img.src = commanders.length ? commanders[0].image : "";
+        }); // ← cierra forEach
 
-select.onchange = () => {
-  let cmd = commanders.find(c => c.id == select.value);
-  img.src = cmd?.image || "";
-};
+        renderStats();
+        renderCommanderStats();
+        renderHistory();
 
-  card.appendChild(select);
+      } //  
 
-  let winBox=document.createElement("div");
-  winBox.innerHTML="🏆";
-  winBox.appendChild(win);
+      function saveGame() {
+        let cards = document.querySelectorAll(".playerCard");
+        let game = { id: Date.now(), date: new Date().toLocaleString(), players: [] };
 
-  card.appendChild(winBox);
+        cards.forEach(c => {
+          let name = c.querySelector(".playerNameBar input").value;
+          let p = players.find(x => x.name === name);
+          let cmdId = c.querySelector("select").value;
+          let cmd = commanders.find(c => c.id == cmdId);
+          let win = c.querySelector("input").checked;
 
-  container.appendChild(card);
-});
+          if (win) {
+            p.wins++;
+            if (cmd) cmd.wins++;
+          } else {
+            p.losses++;
+            if (cmd) cmd.losses++;
+          }
 
-renderStats();
-renderCommanderStats();
-renderHistory();
-}
+          game.players.push({
+            player: p.name,
+            playerId: p.id,
+            commander: cmd.name,
+            commanderId: cmd.id,
+            result: win
+          });
+        });
 
-function saveGame(){
-let cards=document.querySelectorAll(".playerCard");
-let game={id:Date.now(),date:new Date().toLocaleString(),players:[]};
+        games.push(game);
+        save(); render();
+      }
 
-cards.forEach(c=>{
-let name = c.querySelector(".playerNameBar").textContent;
-let p=players.find(x=>x.name===name);
-let cmdId=c.querySelector("select").value;
-let cmd=commanders.find(c=>c.id==cmdId);
-let win=c.querySelector("input").checked;
+      function renderStats() {
+        let div = document.getElementById("stats");
+        div.innerHTML = "";
 
-if(win){p.wins++;cmd.wins++;}
-else{p.losses++;cmd.losses++;}
+        let sorted = [...players].sort((a, b) => b.wins - a.wins).slice(0, 3);
 
-game.players.push({
-  player: p.name,
-  playerId: p.id,
-  commander: cmd.name,
-  commanderId: cmd.id,
-  result: win
-});
-});
+        let container = document.createElement("div");
+        container.className = "podium";
 
-games.push(game);
-save();render();
-}
+        const medals = ["🥇", "🥈", "🥉"];
 
-function renderStats(){
-  let div = stats;
-  div.innerHTML = "";
+        sorted.forEach((p, i) => {
+          let total = p.wins + p.losses;
+          let wr = total ? ((p.wins / total) * 100).toFixed(1) : 0;
 
-  let sorted = [...players].sort((a,b)=>b.wins-a.wins).slice(0,3);
+          let card = document.createElement("div");
+          card.className = "podiumCard";
 
-  let container = document.createElement("div");
-  container.className = "podium";
-
-  const medals = ["🥇","🥈","🥉"];
-
-  sorted.forEach((p,i)=>{
-    let total = p.wins + p.losses;
-    let wr = total ? ((p.wins/total)*100).toFixed(1) : 0;
-
-    let card = document.createElement("div");
-    card.className = "podiumCard";
-
-    card.innerHTML = `
+          card.innerHTML = `
       <div class="medal">${medals[i]}</div>
       <div class="name">${p.name}</div>
       <div class="score">${p.wins}W / ${p.losses}L</div>
       <div class="wr">${wr}% WR</div>
     `;
 
-    container.appendChild(card);
-  });
+          container.appendChild(card);
+        });
 
-  div.appendChild(container);
-}
+        div.appendChild(container);
+      }
 
-function renderCommanderStats(){
-let div=commanderStats;div.innerHTML="";
-commanders.sort((a,b)=>b.wins-a.wins);
-commanders.forEach(c=>{
-let total=c.wins+c.losses;
-let wr=total?((c.wins/total)*100).toFixed(1):0;
-div.innerHTML+=`<div class="row"><img src="${c.image}" width="40"> ${c.name} - ${c.wins}W/${c.losses}L (${wr}%) <button onclick="deleteCommander(${c.id})">🗑</button></div>`;
-});
-}
+      function updateCommander(i, commanderId) {
+        players[i].commander = commanderId;
 
-function renderHistory(){
-  let div = document.getElementById("history");
-  div.innerHTML = "";
+        let cmd = commanders.find(c => c.id == commanderId);
+        let img = document.getElementById(`card-${i}`);
 
-  games.slice().reverse().forEach(g=>{
-    div.innerHTML += `
+        if (cmd && img) {
+          img.src = cmd.image;
+        }
+      }
+
+      function renderCommanderStats() {
+        let div = document.getElementById("commanderStats"); div.innerHTML = "";
+        commanders.sort((a, b) => b.wins - a.wins);
+        commanders.forEach(c => {
+          let total = c.wins + c.losses;
+          let wr = total ? ((c.wins / total) * 100).toFixed(1) : 0;
+          div.innerHTML += `<div class="row"><img src="${c.image}" width="40"> ${c.name} - ${c.wins}W/${c.losses}L (${wr}%) <button onclick="deleteCommander(${c.id})">🗑</button></div>`;
+        });
+      }
+
+      function renderHistory() {
+        let div = document.getElementById("history");
+        div.innerHTML = "";
+
+        games.slice().reverse().forEach(g => {
+          div.innerHTML += `
       <div class="small">
         ${g.date}
         <button onclick="deleteGame(${g.id})" style="float:right">🗑</button>
       </div>
     `;
 
-    g.players.forEach(p=>{
-      div.innerHTML += `<div>${p.player} - ${p.commander} ${p.result ? "🏆" : ""}</div>`;
-    });
+          g.players.forEach(p => {
+            div.innerHTML += `<div>${p.player} - ${p.commander} ${p.result ? "🏆" : ""}</div>`;
+          });
 
-    div.innerHTML += "<hr>";
-  });
-}
+          div.innerHTML += "<hr>";
+        });
+      }
 
-function deleteGame(id){
-  if(!confirm("¿Eliminar esta partida?")) return;
+      function deleteGame(id) {
+        if (!confirm("¿Eliminar esta partida?")) return;
 
-  let game = games.find(g => g.id === id);
-  if(!game) return;
+        let game = games.find(g => g.id === id);
+        if (!game) return;
 
-  game.players.forEach(p=>{
-    let player = players.find(x => x.id === p.playerId) || players.find(x => x.name === p.player);
-    let cmd = commanders.find(c => c.id === p.commanderId) || commanders.find(c => c.name === p.commander);
+        game.players.forEach(p => {
+          let player = players.find(x => x.id === p.playerId) || players.find(x => x.name === p.player);
+          let cmd = commanders.find(c => c.id === p.commanderId) || commanders.find(c => c.name === p.commander);
 
-    if(player){
-      if(p.result) player.wins = Math.max(0, player.wins - 1);
-      else player.losses = Math.max(0, player.losses - 1);
-    }
+          if (player) {
+            if (p.result) player.wins = Math.max(0, player.wins - 1);
+            else player.losses = Math.max(0, player.losses - 1);
+          }
 
-    if(cmd){
-      if(p.result) cmd.wins = Math.max(0, cmd.wins - 1);
-      else cmd.losses = Math.max(0, cmd.losses - 1);
-    }
-  });
+          if (cmd) {
+            if (p.result) cmd.wins = Math.max(0, cmd.wins - 1);
+            else cmd.losses = Math.max(0, cmd.losses - 1);
+          }
+        });
 
-  games = games.filter(g => g.id !== id);
+        games = games.filter(g => g.id !== id);
 
-  save();
-  render();
-}
+        save();
+        render();
+      }
 
-function deleteCommander(id){
-if(!confirm("¿Borrar este comandante?")) return;
-commanders = commanders.filter(c => c.id !== id);
-save();render();
-}
+      function deleteCommander(id) {
+        if (!confirm("¿Borrar este comandante?")) return;
+        commanders = commanders.filter(c => c.id !== id);
+        save(); render();
+      }
 
-function exportData(){
-const data={players,commanders,games};
-const blob=new Blob([JSON.stringify(data)],{type:"application/json"});
-const url=URL.createObjectURL(blob);
-const a=document.createElement("a");
-a.href=url;a.download="mtg-tracker.json";a.click();
-}
+      function exportData() {
+        const data = { players, commanders, games };
+        const blob = new Blob([JSON.stringify(data)], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url; a.download = "mtg-tracker.json"; a.click();
+      }
 
-function importData(event){
-const file=event.target.files[0];
-if(!file)return;
-const reader=new FileReader();
-reader.onload=e=>{
-const data=JSON.parse(e.target.result);
-players=data.players||[];
-commanders=data.commanders||[];
-games=data.games||[];
-save();render();
-};
-reader.readAsText(file);
-}
+      function importData(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = e => {
+          const data = JSON.parse(e.target.result);
+          players = data.players || [];
+          commanders = data.commanders || [];
+          games = data.games || [];
+          save(); render();
+        };
+        reader.readAsText(file);
+      }
 
-let debounceTimer;
-function searchCommander(){
-clearTimeout(debounceTimer);
-debounceTimer=setTimeout(()=>{
-const query=commanderName.value;
-if(query.length<2){suggestions.innerHTML="";return;}
-fetch(`https://api.scryfall.com/cards/autocomplete?q=${encodeURIComponent(query)}`)
-.then(r=>r.json())
-.then(data=>{
-const box=document.getElementById("suggestions");
-box.innerHTML="";
-data.data.slice(0,5).forEach(name=>{
-const div=document.createElement("div");
-div.textContent=name;
-div.style.cursor="pointer";
-div.style.padding="6px";
-div.onclick=()=>{commanderName.value=name;box.innerHTML="";};
-box.appendChild(div);
-});
-});
-},250);
-}
+      let debounceTimer;
+      function searchCommander() {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => {
+          const query = commanderName.value;
+          if (query.length < 2) { suggestions.innerHTML = ""; return; }
+          fetch(`https://api.scryfall.com/cards/autocomplete?q=${encodeURIComponent(query)}`)
+            .then(r => r.json())
+            .then(data => {
+              const box = document.getElementById("suggestions");
+              box.innerHTML = "";
+              data.data.slice(0, 5).forEach(name => {
+                const div = document.createElement("div");
+                div.textContent = name;
+                div.style.cursor = "pointer";
+                div.style.padding = "6px";
+                div.onclick = () => { commanderName.value = name; box.innerHTML = ""; };
+                box.appendChild(div);
+              });
+            });
+        }, 250);
+      }
 
-render();
-</script>
+      render();
+    </script>
 
 </body>
+
 </html>
