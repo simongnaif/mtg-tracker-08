@@ -46,6 +46,51 @@
       }
     }
 
+    .commanderGrid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+      margin-top: 15px;
+    }
+
+    .commanderCard {
+      background: #1b1b2a;
+      border-radius: 12px;
+      padding: 8px;
+      text-align: center;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      transition: transform 0.2s;
+    }
+
+    .commanderCard:hover {
+      transform: scale(1.05);
+    }
+
+    .commanderCard img {
+      width: 100%;
+      border-radius: 8px;
+    }
+
+    .commanderTop {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .commanderTop .commanderCard {
+      transform: scale(1.05);
+      border: 2px solid gold;
+    }
+
+    .commanderTop .commanderCard:nth-child(2) {
+      border: 2px solid silver;
+    }
+
+    .commanderTop .commanderCard:nth-child(3) {
+      border: 2px solid #cd7f32;
+    }
+
     .avatarContainer {
       position: relative;
       width: 100%;
@@ -606,13 +651,52 @@
       }
 
       function renderCommanderStats() {
-        let div = document.getElementById("commanderStats"); div.innerHTML = "";
-        commanders.sort((a, b) => b.wins - a.wins);
-        commanders.forEach(c => {
+        let div = document.getElementById("commanderStats");
+        div.innerHTML = "";
+
+        let sorted = [...commanders].sort((a, b) => b.wins - a.wins);
+
+        let top = sorted.slice(0, 3);
+        let rest = sorted.slice(3);
+
+        // 🥇 TOP 3
+        let topContainer = document.createElement("div");
+        topContainer.className = "commanderTop";
+
+        top.forEach(c => {
           let total = c.wins + c.losses;
           let wr = total ? ((c.wins / total) * 100).toFixed(1) : 0;
-          div.innerHTML += `<div class="row"><img src="${c.image}" width="40"> ${c.name} - ${c.wins}W/${c.losses}L (${wr}%) <button onclick="deleteCommander(${c.id})">🗑</button></div>`;
+
+          topContainer.innerHTML += `
+      <div class="commanderCard">
+        <img src="${c.image}">
+        <div>${c.name}</div>
+        <div>${c.wins}W / ${c.losses}L</div>
+        <div>${wr}%</div>
+      </div>
+    `;
         });
+
+        div.appendChild(topContainer);
+
+        // 🃏 RESTO
+        let grid = document.createElement("div");
+        grid.className = "commanderGrid";
+
+        rest.forEach(c => {
+          let total = c.wins + c.losses;
+          let wr = total ? ((c.wins / total) * 100).toFixed(1) : 0;
+
+          grid.innerHTML += `
+      <div class="commanderCard">
+        <img src="${c.image}">
+        <div style="font-size:12px">${c.name}</div>
+        <div style="font-size:11px">${wr}%</div>
+      </div>
+    `;
+        });
+
+        div.appendChild(grid);
       }
 
       function renderHistory() {
