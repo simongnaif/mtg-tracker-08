@@ -467,28 +467,34 @@
       let selectedCommanders = new Set();
 
       function toggleDeleteMode() {
-        deleteMode = !deleteMode;
-        selectedCommanders.clear();
 
-        document.getElementById("deleteBtn").textContent = deleteMode
-          ? "✅ Confirmar borrado"
-          : "🗑 Borrar comandantes";
+        // 🧨 Si ya estamos en modo borrar → intentar borrar
+        if (deleteMode) {
 
-        if (!deleteMode) return;
+          if (selectedCommanders.size === 0) {
+            alert("Selecciona al menos un comandante");
+            return;
+          }
 
-        // Si ya está activo y se pulsa otra vez → borrar
-        if (deleteMode && selectedCommanders.size > 0) {
           if (!confirm("¿Borrar comandantes seleccionados?")) return;
 
           commanders = commanders.filter(c => !selectedCommanders.has(c.id));
 
           save();
-          render();
-
           deleteMode = false;
           selectedCommanders.clear();
+
           document.getElementById("deleteBtn").textContent = "🗑 Borrar comandantes";
+
+          render();
+          return;
         }
+
+        // 🔥 Activar modo borrar
+        deleteMode = true;
+        selectedCommanders.clear();
+
+        document.getElementById("deleteBtn").textContent = "✅ Confirmar borrado";
 
         render();
       }
