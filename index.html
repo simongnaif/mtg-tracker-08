@@ -45,6 +45,12 @@
       letter-spacing: 1px;
     }
 
+    .inputsRow {
+      justify-content: center;
+      margin: 18px 0;
+      padding: 10px 0;
+    }
+
     .logoContainer img {
       width: 420px;
       max-width: 100%;
@@ -75,10 +81,11 @@
     .commanderCard {
       background: #1b1b2a;
       border-radius: 12px;
-      padding: 8px;
+      padding: 0px;
       text-align: center;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
       transition: transform 0.2s;
+      overflow: hidden;
     }
 
     .commanderCard:hover {
@@ -87,6 +94,7 @@
 
     .commanderCard img {
       width: 100%;
+      display: block;
       border-radius: 8px;
     }
 
@@ -94,12 +102,57 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 15px;
-      margin-bottom: 20px;
+      padding: 0 15px;
+      /* 🔥 CLAVE */
+      margin-top: 10px;
     }
 
     .commanderTop .commanderCard {
-      transform: scale(1.05);
-      border: 2px solid gold;
+      .commanderTop .commanderCard:nth-child(1) {
+        border: 2px solid gold;
+        box-shadow:
+          0 0 8px rgba(255, 215, 0, 0.6),
+          0 0 20px rgba(255, 215, 0, 0.3),
+          0 0 40px rgba(255, 215, 0, 0.15);
+      }
+
+      .commanderTop .commanderCard:nth-child(2) {
+        border: 2px solid silver;
+        box-shadow:
+          0 0 6px rgba(192, 192, 192, 0.6),
+          0 0 15px rgba(192, 192, 192, 0.3),
+          0 0 30px rgba(192, 192, 192, 0.15);
+      }
+
+      .commanderTop .commanderCard:nth-child(3) {
+        border: 2px solid #cd7f32;
+        box-shadow:
+          0 0 6px rgba(205, 127, 50, 0.6),
+          0 0 15px rgba(205, 127, 50, 0.3),
+          0 0 30px rgba(205, 127, 50, 0.15);
+      }
+    }
+
+    @keyframes glowPulseGold {
+
+      0%,
+      100% {
+        box-shadow:
+          0 0 8px rgba(255, 215, 0, 0.6),
+          0 0 20px rgba(255, 215, 0, 0.3),
+          0 0 40px rgba(255, 215, 0, 0.15);
+      }
+
+      50% {
+        box-shadow:
+          0 0 12px rgba(255, 215, 0, 0.9),
+          0 0 30px rgba(255, 215, 0, 0.5),
+          0 0 60px rgba(255, 215, 0, 0.25);
+      }
+    }
+
+    .commanderTop .commanderCard:nth-child(1) {
+      animation: glowPulseGold 3s ease-in-out infinite;
     }
 
     .commanderTop .commanderCard:nth-child(2) {
@@ -176,11 +229,20 @@
     }
 
     .card {
-      background: #1c1c2b;
+      background: rgba(28, 28, 43, 0.65);
+      /* 🔥 transparencia */
+      backdrop-filter: blur(8px);
+      /* 🔥 efecto cristal */
+      -webkit-backdrop-filter: blur(8px);
+      /* soporte móvil */
+
       padding: 20px;
       border-radius: 16px;
       margin-bottom: 20px;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      /* brillo sutil */
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
     }
 
     .playerCard select {
@@ -415,7 +477,7 @@
 
     <div id="playersList"></div>
 
-    <div class="row" style="justify-content:center; margin-top:15px;">
+    <div class="row inputsRow">
 
       <input id="playerName" placeholder="Jugador">
       <button onclick="addPlayer()">+</button>
@@ -453,7 +515,6 @@
 
     <div class="card">
       <h2>Historial</h2>
-      <button onclick="clearHistory()">🧨 Borrar todo</button>
       <div id="history"></div>
     </div>
 
@@ -663,7 +724,8 @@
           let cmdId = c.querySelector("select").value;
           let cmd = commanders.find(c => c.id == cmdId);
           if (!cmd) return;
-          let win = c.querySelector("input").checked;
+          let radio = c.querySelector('input[type="radio"]');
+          let win = radio && radio.checked;
 
           if (win) {
             p.wins++;
