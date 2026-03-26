@@ -463,6 +463,43 @@
       z-index: 999;
       /* para que quede por encima */
     }
+
+    #statsOverlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.75);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    #statsPopup {
+      background: rgba(20,20,35,0.95);
+      border: 2px solid #c8a75d;
+      border-radius: 16px;
+      padding: 20px;
+      width: 400px;
+      max-height: 80vh;
+      overflow-y: auto;
+      box-shadow: 0 0 25px rgba(0,0,0,0.8);
+      animation: popupFade 0.25s ease;
+    }
+
+    @keyframes popupFade {
+      from { transform: scale(0.9); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .closeBtn {
+      float: right;
+      cursor: pointer;
+      font-size: 18px;
+    }
+    
   </style>
 </head>
 
@@ -624,6 +661,105 @@
         });
       }
 
+      function getDeckStats(playerName, commanderName) {
+        const filtered = games.filter(g =>
+          g.players.some(p => p.player === playerName && p.commander === commanderName)
+        );
+
+        const wins = filtered.filter(g =>
+          g.players.some(p => p.player === playerName && p.commander === commanderName && p.result)
+        );
+
+        return {
+          games: filtered.length,
+          wins: wins.length,
+          wr: filtered.length ? ((wins.length / filtered.length) * 100).toFixed(1) : 0
+        };
+      }
+
+      function getMatchupStats(playerName, commanderName, vsList) {
+        const filtered = games.filter(g => {
+          const me = g.players.find(p => p.player === playerName && p.commander === commanderName);
+          if (!me) return false;
+
+          const enemies = g.players
+            .filter(p => p.player !== playerName)
+            .map(p => p.commander);
+
+          return vsList.every(v => !v || enemies.includes(v));
+        });
+
+        const wins = filtered.filter(g =>
+          g.players.some(p => p.player === playerName && p.commander === commanderName && p.result)
+        );
+
+        return {
+          games: filtered.length,
+          wins: wins.length,
+          losses: filtered.length - wins.length,
+          wr: filtered.length ? ((wins.length / filtered.length) * 100).toFixed(1) : 0
+        };
+      }
+
+      function getMatchupStats(playerName, commanderName, vsList) {
+        const filtered = games.filter(g => {
+          const me = g.players.find(p => p.player === playerName && p.commander === commanderName);
+          if (!me) return false;
+
+          const enemies = g.players
+            .filter(p => p.player !== playerName)
+            .map(p => p.commander);
+
+          return vsList.every(v => !v || enemies.includes(v));
+        });
+
+        const wins = filtered.filter(g =>
+          g.players.some(p => p.player === playerName && p.commander === commanderName && p.result)
+        );
+
+        return {
+          games: filtered.length,
+          wins: wins.length,
+          losses: filtered.length - wins.length,
+          wr: filtered.length ? ((wins.length / filtered.length) * 100).toFixed(1) : 0
+        };
+      }
+
+      function getBestWorstMatchups(playerName, deck) {
+        let results = {};
+
+        games.forEach(g => {
+          const me = g.players.find(p => p.player === playerName && p.commander === deck);
+          if (!me) return;
+
+          g.players
+            .filter(p => p.player !== playerName)
+            .forEach(enemy => {
+              if (!results[enemy.commander]) {
+                results[enemy.commander] = { wins: 0, games: 0 };
+              }
+
+              results[enemy.commander].games++;
+              if (me.result) results[enemy.commander].wins++;
+            });
+        });
+
+        let arr = Object.entries(results).map(([cmd, data]) => {
+          return {
+            commander: cmd,
+            wr: data.games ? (data.wins / data.games) * 100 : 0,
+            games: data.games
+          };
+        });
+
+        arr.sort((a, b) => b.wr - a.wr);
+
+        return {
+          best: arr[0],
+          worst: arr[arr.length - 1]
+        };
+      }
+
       function save() {
         localStorage.setItem("players", JSON.stringify(players));
         localStorage.setItem("commanders", JSON.stringify(commanders));
@@ -670,12 +806,12 @@
           container.innerHTML += `
   <div class="playerCard">
 
-    <div class="avatarContainer">
+    <div class="avatarContainer" onclick="openPlayerStats('${p.name}')">
       <img class="playerAvatar" src="${data.src}" style="object-position:${data.pos}">
       <img id="card-${i}" class="cardImage" src="">
     </div>
 
-    <div class="playerNameBar">
+    <div class="playerNameBar" onclick="openPlayerStats('${p.name}')">
       <input 
         value="${p.name}" 
         onchange="updatePlayerName(${i}, this.value)"
@@ -858,6 +994,106 @@
           div.innerHTML += "<hr>";
         });
       }
+
+      function openPlayerStats(playerName) {
+
+        // eliminar si ya existe
+        const old = document.getElementById("statsOverlay");
+        if (old) old.remove();
+
+        const overlay = document.createElement("div");
+        overlay.id = "statsOverlay";
+
+        const popup = document.createElement("div");
+        popup.id = "statsPopup";
+
+        popup.innerHTML = `
+          <div class="closeBtn" onclick="closeStats()">✖</div>
+          <h2>${playerName}</h2>
+        `;
+
+        // 🔹 decks usados
+        const decks = [...new Set(
+          games.flatMap(g =>
+            g.players
+              .filter(p => p.player === playerName)
+              .map(p => p.commander)
+          )
+        )];
+
+        decks.forEach(deck => {
+
+          const stats = getDeckStats(playerName, deck);
+          const mw = getBestWorstMatchups(playerName, deck);
+
+          const block = document.createElement("div");
+          block.style.marginBottom = "16px";
+          block.style.padding = "10px";
+          block.style.borderBottom = "1px solid rgba(255,255,255,0.1)";
+
+          block.innerHTML = `
+            <strong style="font-size:16px">${deck}</strong><br>
+
+            🧾 ${stats.wins}W / ${stats.games}G  
+            📊 ${stats.wr}% WR
+
+            <br><br>
+
+            ⚔️ VS:
+            <select onchange="updateMatchupPopup('${playerName}','${deck}', this, 1)">
+              <option value="">Todos</option>
+              ${commanders.map(c => `<option>${c.name}</option>`).join("")}
+            </select>
+
+            <select onchange="updateMatchupPopup('${playerName}','${deck}', this, 2)">
+              <option value="">Todos</option>
+              ${commanders.map(c => `<option>${c.name}</option>`).join("")}
+            </select>
+
+            <div id="popup-${playerName}-${deck}" style="margin-top:6px;font-size:13px;"></div>
+
+            <div style="font-size:11px; opacity:0.7; margin-top:6px;">
+              🔥 Mejor: ${mw.best ? mw.best.commander + " (" + mw.best.wr.toFixed(1) + "%)" : "-"}<br>
+              💀 Peor: ${mw.worst ? mw.worst.commander + " (" + mw.worst.wr.toFixed(1) + "%)" : "-"}
+            </div>
+          `;
+
+          popup.appendChild(block);
+        });
+
+        overlay.appendChild(popup);
+        document.body.appendChild(overlay);
+
+        // cerrar al hacer click fuera
+        overlay.onclick = (e) => {
+          if (e.target === overlay) closeStats();
+        };
+      }
+
+      function updateMatchupPopup(playerName, deck, selectEl, index) {
+
+        const parent = selectEl.parentElement;
+        const selects = parent.querySelectorAll("select");
+
+        const vsList = [
+          selects[0].value,
+          selects[1].value
+        ];
+
+        const stats = getMatchupStats(playerName, deck, vsList);
+
+        const div = document.getElementById(`popup-${playerName}-${deck}`);
+
+        div.innerHTML = `
+          → ${stats.wins}W / ${stats.losses}L  
+          (${stats.games} partidas · ${stats.wr}%)
+        `;
+      }
+
+      function closeStats() {
+        const overlay = document.getElementById("statsOverlay");
+        if (overlay) overlay.remove();
+}
 
       function deleteGame(id) {
         if (!confirm("¿Eliminar esta partida?")) return;
