@@ -48,10 +48,79 @@
       gap: 20px;
     }
 
-    .podiumCard .name {
-      font-family: 'Cinzel', serif;
-      font-size: 18px;
-      letter-spacing: 1px;
+    .podiumCard {
+      background: rgba(28, 28, 43, 0.65);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+
+      border-radius: 16px;
+      padding: 15px;
+      text-align: center;
+
+      border: 1px solid rgba(255, 255, 255, 0.08);
+
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+      transition: transform 0.2s;
+    }
+
+    .podiumCard:nth-child(1) {
+      border: 2px solid gold;
+
+      background: linear-gradient(to bottom,
+          rgba(255, 215, 0, 0.35) 0%,
+          rgba(255, 215, 0, 0.15) 30%,
+          rgba(20, 20, 35, 0.95) 100%);
+
+      box-shadow:
+        0 0 8px rgba(255, 215, 0, 0.6),
+        0 0 20px rgba(255, 215, 0, 0.3),
+        0 0 40px rgba(255, 215, 0, 0.15);
+
+      animation: glowPulseGold 3s ease-in-out infinite;
+    }
+
+    .podiumCard:nth-child(2) {
+      border: 2px solid silver;
+
+      background: linear-gradient(to bottom,
+          rgba(220, 220, 220, 0.35) 0%,
+          rgba(220, 220, 220, 0.15) 30%,
+          rgba(20, 20, 35, 0.95) 100%);
+
+      box-shadow:
+        0 0 6px rgba(192, 192, 192, 0.6),
+        0 0 15px rgba(192, 192, 192, 0.3),
+        0 0 30px rgba(192, 192, 192, 0.15);
+    }
+
+    .podiumCard:nth-child(3) {
+      border: 2px solid #cd7f32;
+
+      background: linear-gradient(to bottom,
+          rgba(205, 127, 50, 0.4) 0%,
+          rgba(205, 127, 50, 0.2) 30%,
+          rgba(20, 20, 35, 0.95) 100%);
+
+      box-shadow:
+        0 0 6px rgba(205, 127, 50, 0.6),
+        0 0 15px rgba(205, 127, 50, 0.3),
+        0 0 30px rgba(205, 127, 50, 0.15);
+    }
+
+    .podiumCard:nth-child(1) .name {
+      color: gold;
+    }
+
+    .podiumCard:nth-child(2) .name {
+      color: #dcdcdc;
+    }
+
+    .podiumCard:nth-child(3) .name {
+      color: #cd7f32;
+    }
+
+    .podiumCard:hover {
+      transform: scale(1.05);
     }
 
     .inputsRow {
@@ -617,16 +686,21 @@
     }
 
     .winnerBtn {
-      margin-top: 8px;
+      margin: 15px 0 15px 0;
+
       width: 40px;
       height: 40px;
       border-radius: 50%;
+
       background: rgba(255, 255, 255, 0.08);
+
       display: flex;
       align-items: center;
       justify-content: center;
+
       cursor: pointer;
       transition: all 0.2s ease;
+
       border: 2px solid transparent;
     }
 
