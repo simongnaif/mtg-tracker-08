@@ -106,7 +106,7 @@
       display: block;
       border-radius: 8px;
     }
-    
+
     .commanderTop {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -116,6 +116,7 @@
     .commanderTop .commanderCard {
       padding: 12px 10px 20px;
       max-width: 100%;
+
       .commanderTop .commanderCard:nth-child(1) {
         border: 2px solid gold;
         box-shadow:
@@ -171,30 +172,24 @@
     }
 
     .commanderTop .commanderCard:nth-child(1) {
-      background: linear-gradient(
-        to bottom,
-        rgba(255,215,0,0.35) 0%,
-        rgba(255,215,0,0.15) 30%,
-        rgba(20,20,35,0.95) 100%
-      );
+      background: linear-gradient(to bottom,
+          rgba(255, 215, 0, 0.35) 0%,
+          rgba(255, 215, 0, 0.15) 30%,
+          rgba(20, 20, 35, 0.95) 100%);
     }
 
     .commanderTop .commanderCard:nth-child(2) {
-      background: linear-gradient(
-        to bottom,
-        rgba(220,220,220,0.35) 0%,
-        rgba(220,220,220,0.15) 30%,
-        rgba(20,20,35,0.95) 100%
-      );
+      background: linear-gradient(to bottom,
+          rgba(220, 220, 220, 0.35) 0%,
+          rgba(220, 220, 220, 0.15) 30%,
+          rgba(20, 20, 35, 0.95) 100%);
     }
 
     .commanderTop .commanderCard:nth-child(3) {
-      background: linear-gradient(
-        to bottom,
-        rgba(205,127,50,0.4) 0%,
-        rgba(205,127,50,0.2) 30%,
-        rgba(20,20,35,0.95) 100%
-      );
+      background: linear-gradient(to bottom,
+          rgba(205, 127, 50, 0.4) 0%,
+          rgba(205, 127, 50, 0.2) 30%,
+          rgba(20, 20, 35, 0.95) 100%);
     }
 
     .commanderTop .commanderCard:nth-child(2) {
@@ -226,9 +221,10 @@
       line-height: 1.15;
       font-family: 'Cinzel', serif;
     }
-    
+
     .commanderTop .commanderCard div:first-of-type {
-      margin-top: 14px; /* nombre separado de la carta */
+      margin-top: 14px;
+      /* nombre separado de la carta */
     }
 
     .avatarContainer {
@@ -725,6 +721,14 @@
 
       <script>
         let players = JSON.parse(localStorage.getItem("players")) || [];
+        if (players.length === 0) {
+          players = [
+            { id: Date.now() + 1, name: "Simón", wins: 0, losses: 0 },
+            { id: Date.now() + 2, name: "Tato", wins: 0, losses: 0 },
+            { id: Date.now() + 3, name: "Carlos", wins: 0, losses: 0 }
+          ];
+          localStorage.setItem("players", JSON.stringify(players));
+        }
         let commanders = JSON.parse(localStorage.getItem("commanders")) || [];
         let games = JSON.parse(localStorage.getItem("games")) || [];
         let deleteMode = false;
