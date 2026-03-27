@@ -39,6 +39,12 @@
 
     }
 
+    .bottomGrid {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
     .podiumCard .name {
       font-family: 'Cinzel', serif;
       font-size: 18px;
@@ -75,7 +81,7 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
       gap: 12px;
-      margin-top: 15px;
+      margin-top: 30px;
     }
 
     .commanderCard {
@@ -97,17 +103,16 @@
       display: block;
       border-radius: 8px;
     }
-
+    
     .commanderTop {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 15px;
-      padding: 0 15px;
-      /* 🔥 CLAVE */
-      margin-top: 10px;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 14px;
     }
 
     .commanderTop .commanderCard {
+      padding: 12px 10px 20px;
+      max-width: 100%;
       .commanderTop .commanderCard:nth-child(1) {
         border: 2px solid gold;
         box-shadow:
@@ -155,12 +160,72 @@
       animation: glowPulseGold 3s ease-in-out infinite;
     }
 
+    .commanderTop .commanderCard img {
+      width: 85%;
+      margin: 18px auto 0;
+      display: block;
+      border-radius: 8px;
+    }
+
+    .commanderTop .commanderCard:nth-child(1) {
+      background: linear-gradient(
+        to bottom,
+        rgba(255,215,0,0.35) 0%,
+        rgba(255,215,0,0.15) 30%,
+        rgba(20,20,35,0.95) 100%
+      );
+    }
+
+    .commanderTop .commanderCard:nth-child(2) {
+      background: linear-gradient(
+        to bottom,
+        rgba(220,220,220,0.35) 0%,
+        rgba(220,220,220,0.15) 30%,
+        rgba(20,20,35,0.95) 100%
+      );
+    }
+
+    .commanderTop .commanderCard:nth-child(3) {
+      background: linear-gradient(
+        to bottom,
+        rgba(205,127,50,0.4) 0%,
+        rgba(205,127,50,0.2) 30%,
+        rgba(20,20,35,0.95) 100%
+      );
+    }
+
     .commanderTop .commanderCard:nth-child(2) {
       border: 2px solid silver;
     }
 
     .commanderTop .commanderCard:nth-child(3) {
       border: 2px solid #cd7f32;
+    }
+
+    .commanderTop .commanderCard:nth-child(1) div {
+      color: gold;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+    }
+
+    .commanderTop .commanderCard:nth-child(2) div {
+      color: #dcdcdc;
+      font-weight: 600;
+    }
+
+    .commanderTop .commanderCard:nth-child(3) div {
+      color: #cd7f32;
+      font-weight: 500;
+    }
+
+    .commanderTop .commanderCard div {
+      margin-top: 10px;
+      line-height: 1.15;
+      font-family: 'Cinzel', serif;
+    }
+    
+    .commanderTop .commanderCard div:first-of-type {
+      margin-top: 14px; /* nombre separado de la carta */
     }
 
     .avatarContainer {
@@ -195,7 +260,7 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      transform: translate(-50%, 40%) scale(1.1);
+      transform: translate(-50%, 25%) scale(0.90);
       /* 🔥 centrado real */
 
       width: 120px;
@@ -212,7 +277,7 @@
     .playerNameBar {
       margin-top: 10px;
       background: #111827;
-      padding: 14px 10px;
+      padding: 8px 10px;
       font-weight: bold;
       font-size: 24px;
       /* 🔥 más grande */
@@ -226,6 +291,8 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      letter-spacing: 1px;
+      text-transform: uppercase;
     }
 
     .card {
@@ -307,11 +374,6 @@
       overflow: hidden;
     }
 
-    .playerNameBar {
-      letter-spacing: 1px;
-      text-transform: uppercase;
-    }
-
     .playerNameBar input {
       background: transparent;
       border: none;
@@ -319,10 +381,14 @@
       text-align: center;
       width: 100%;
       outline: none;
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 600;
-      font-size: 26px;
-      letter-spacing: 1px;
+
+      font-family: 'Cinzel', serif;
+      /* 🔥 igual que ranking */
+      font-weight: 700;
+      font-size: 30px;
+      /* 🔥 más presencia */
+      letter-spacing: 2px;
+      text-transform: uppercase;
     }
 
     .playerCard {
@@ -412,7 +478,12 @@
     }
 
     .row button {
-      min-width: 40px;
+      height: 40px;
+      width: 40px;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .small {
@@ -470,7 +541,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0,0,0,0.75);
+      background: rgba(0, 0, 0, 0.75);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -478,20 +549,48 @@
     }
 
     #statsPopup {
-      background: rgba(20,20,35,0.95);
+      position: relative;
+      background: none;
+      /* 🔥 quitamos fondo plano */
       border: 2px solid #c8a75d;
       border-radius: 16px;
       padding: 20px;
       width: 400px;
       max-height: 80vh;
       overflow-y: auto;
-      box-shadow: 0 0 25px rgba(0,0,0,0.8);
-      animation: popupFade 0.25s ease;
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.8);
+    }
+
+    #statsPopup::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 16px;
+
+      background: linear-gradient(to right,
+          rgba(10, 10, 20, 0.85) 0%,
+          rgba(10, 10, 20, 0.6) 40%,
+          rgba(10, 10, 20, 0.2) 100%);
+
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    #statsPopup>* {
+      position: relative;
+      z-index: 2;
     }
 
     @keyframes popupFade {
-      from { transform: scale(0.9); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
+      from {
+        transform: scale(0.9);
+        opacity: 0;
+      }
+
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
     }
 
     .closeBtn {
@@ -499,7 +598,65 @@
       cursor: pointer;
       font-size: 18px;
     }
-    
+
+    .popupAvatar {
+      position: absolute;
+      top: -30px;
+      right: -20px;
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+
+      border-radius: 50%;
+      border: 3px solid #c8a75d;
+
+      box-shadow:
+        0 0 20px rgba(0, 0, 0, 0.8),
+        0 0 15px rgba(200, 167, 93, 0.4);
+
+      z-index: 10;
+    }
+
+    .winnerBtn {
+      margin-top: 8px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: 2px solid transparent;
+    }
+
+    .winnerBtn:hover {
+      transform: scale(1.1);
+    }
+
+    .winnerBtn.active {
+      background: radial-gradient(circle, gold, #b8860b);
+      color: black;
+      border: 2px solid gold;
+      box-shadow: 0 0 10px gold;
+    }
+
+    #commanderName {
+      height: 40px;
+      padding: 0 10px;
+      box-sizing: border-box;
+    }
+
+    #deleteBtn {
+      height: 40px;
+      width: 40px;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(45deg, #ff7675, #d63031);
+    }
   </style>
 </head>
 
@@ -510,26 +667,14 @@
   </div>
 
   <div class="card">
-    <h2>Partida</h2>
+    <h2>Hechiceros</h2>
 
     <div id="playersList"></div>
 
-    <div class="row inputsRow">
-
-      <input id="playerName" placeholder="Jugador">
-      <button onclick="addPlayer()">+</button>
-
-      <div style="position:relative;">
-        <input id="commanderName" placeholder="Comandante" onkeyup="searchCommander()">
-        <div id="suggestions"></div>
-      </div>
-
-      <button onclick="addCommander()">+</button>
-
-      <button onclick="saveGame()" style="background:linear-gradient(45deg,#00b894,#55efc4);">
+    <div style="width:100%; text-align:center; margin:15px 0;">
+      <button onclick="saveGame()" style="background:linear-gradient(45deg,#962300,#ef5555);">
         Guardar partida
       </button>
-
     </div>
 
     <div class="card">
@@ -542,268 +687,291 @@
 
       <div id="commanderStats"></div>
 
-      <div style="text-align:center; margin-top:15px;">
+      <div class="row inputsRow" style="justify-content:center; gap:10px;">
+
+        <div style="position:relative;">
+          <input id="commanderName" placeholder="Comandante" onkeyup="searchCommander()">
+          <div id="suggestions"></div>
+        </div>
+
+        <button onclick="addCommander()">+</button>
+
         <button onclick="toggleDeleteMode()" id="deleteBtn">
-          🗑 Borrar comandantes
+          🗑
         </button>
+
       </div>
 
-    </div>
+      <div class="bottomGrid">
 
-    <div class="card">
-      <h2>Historial</h2>
-      <div id="history"></div>
-    </div>
+        <div class="card">
+          <h2>Historial</h2>
+          <div id="history"></div>
+        </div>
 
-    <div class="card">
-      <h2>Datos</h2>
-      <button onclick="exportData()">Exportar</button>
-      <input type="file" onchange="importData(event)">
-    </div>
+        <div class="card">
+          <h2>Datos</h2>
+          <button onclick="exportData()">Exportar</button>
 
-    <script>
-      let players = JSON.parse(localStorage.getItem("players")) || [];
-      let commanders = JSON.parse(localStorage.getItem("commanders")) || [];
-      let games = JSON.parse(localStorage.getItem("games")) || [];
-      let deleteMode = false;
-      let selectedCommanders = new Set();
+          <button onclick="triggerImport()">Importar</button>
 
-      function toggleDeleteMode() {
+          <input type="file" id="importFile" onchange="importData(event)" style="display:none;">
+        </div>
 
-        // 🧨 Si ya estamos en modo borrar → intentar borrar
-        if (deleteMode) {
+      </div>
 
-          if (selectedCommanders.size === 0) {
-            alert("Selecciona al menos un comandante");
+      <script>
+        let players = JSON.parse(localStorage.getItem("players")) || [];
+        let commanders = JSON.parse(localStorage.getItem("commanders")) || [];
+        let games = JSON.parse(localStorage.getItem("games")) || [];
+        let deleteMode = false;
+        let selectedCommanders = new Set();
+
+        function toggleDeleteMode() {
+
+          // 🧨 Si ya estamos en modo borrar → intentar borrar
+          if (deleteMode) {
+
+            if (selectedCommanders.size === 0) {
+              alert("Selecciona al menos un comandante");
+              return;
+            }
+
+            if (!confirm("¿Borrar comandantes seleccionados?")) return;
+
+            commanders = commanders.filter(c => !selectedCommanders.has(c.id));
+
+            save();
+            deleteMode = false;
+            selectedCommanders.clear();
+
+            document.getElementById("deleteBtn").textContent = "🗑 Borrar comandantes";
+
+            render();
             return;
           }
 
-          if (!confirm("¿Borrar comandantes seleccionados?")) return;
-
-          commanders = commanders.filter(c => !selectedCommanders.has(c.id));
-
-          save();
-          deleteMode = false;
+          // 🔥 Activar modo borrar
+          deleteMode = true;
           selectedCommanders.clear();
 
-          document.getElementById("deleteBtn").textContent = "🗑 Borrar comandantes";
+          document.getElementById("deleteBtn").textContent = "✅ Confirmar borrado";
 
           render();
-          return;
         }
 
-        // 🔥 Activar modo borrar
-        deleteMode = true;
-        selectedCommanders.clear();
+        function selectWinner(el, playerId) {
+          document.querySelectorAll(".winnerBtn").forEach(b => b.classList.remove("active"));
+          el.classList.add("active");
+        }
 
-        document.getElementById("deleteBtn").textContent = "✅ Confirmar borrado";
+        function clearHistory() {
+          if (!confirm("¿Borrar TODO el historial?")) return;
 
-        render();
-      }
-
-      function clearHistory() {
-        if (!confirm("¿Borrar TODO el historial?")) return;
-
-        players.forEach(p => {
-          p.wins = 0;
-          p.losses = 0;
-        });
-
-        commanders.forEach(c => {
-          c.wins = 0;
-          c.losses = 0;
-        });
-
-        games = [];
-
-        save();
-        render();
-      }
-
-      function getPlayerImage(name) {
-        const images = {
-          "Tato": { src: "tato1.png", pos: "center 10%" },
-          "Carlos": { src: "carlos1.png", pos: "center 15%" },
-          "Simón": { src: "simon1.png", pos: "center 20%" }
-        };
-
-        return images[name] || { src: "", pos: "center" };
-      }
-
-      function recalcStats() {
-        // reset
-        players.forEach(p => {
-          p.wins = 0;
-          p.losses = 0;
-        });
-
-        commanders.forEach(c => {
-          c.wins = 0;
-          c.losses = 0;
-        });
-
-        // recalcular desde historial
-        games.forEach(g => {
-          g.players.forEach(p => {
-            let player = players.find(x => x.name === p.player);
-            let cmd = commanders.find(c => c.name === p.commander);
-
-            if (player) {
-              if (p.result) player.wins++;
-              else player.losses++;
-            }
-
-            if (cmd) {
-              if (p.result) cmd.wins++;
-              else cmd.losses++;
-            }
+          players.forEach(p => {
+            p.wins = 0;
+            p.losses = 0;
           });
-        });
-      }
 
-      function getDeckStats(playerName, commanderName) {
-        const filtered = games.filter(g =>
-          g.players.some(p => p.player === playerName && p.commander === commanderName)
-        );
+          commanders.forEach(c => {
+            c.wins = 0;
+            c.losses = 0;
+          });
 
-        const wins = filtered.filter(g =>
-          g.players.some(p => p.player === playerName && p.commander === commanderName && p.result)
-        );
+          games = [];
 
-        return {
-          games: filtered.length,
-          wins: wins.length,
-          wr: filtered.length ? ((wins.length / filtered.length) * 100).toFixed(1) : 0
-        };
-      }
+          save();
+          render();
+        }
 
-      function getMatchupStats(playerName, commanderName, vsList) {
-        const filtered = games.filter(g => {
-          const me = g.players.find(p => p.player === playerName && p.commander === commanderName);
-          if (!me) return false;
+        function getPlayerImage(name) {
+          const images = {
+            "Tato": { src: "tato1.png", pos: "center 10%" },
+            "Carlos": { src: "carlos1.png", pos: "center 15%" },
+            "Simón": { src: "simon1.png", pos: "center 20%" }
+          };
 
-          const enemies = g.players
-            .filter(p => p.player !== playerName)
-            .map(p => p.commander);
+          return images[name] || { src: "", pos: "center" };
+        }
 
-          return vsList.every(v => !v || enemies.includes(v));
-        });
+        function recalcStats() {
+          // reset
+          players.forEach(p => {
+            p.wins = 0;
+            p.losses = 0;
+          });
 
-        const wins = filtered.filter(g =>
-          g.players.some(p => p.player === playerName && p.commander === commanderName && p.result)
-        );
+          commanders.forEach(c => {
+            c.wins = 0;
+            c.losses = 0;
+          });
 
-        return {
-          games: filtered.length,
-          wins: wins.length,
-          losses: filtered.length - wins.length,
-          wr: filtered.length ? ((wins.length / filtered.length) * 100).toFixed(1) : 0
-        };
-      }
+          // recalcular desde historial
+          games.forEach(g => {
+            g.players.forEach(p => {
+              let player = players.find(x => x.name === p.player);
+              let cmd = commanders.find(c => c.name === p.commander);
 
-      function getMatchupStats(playerName, commanderName, vsList) {
-        const filtered = games.filter(g => {
-          const me = g.players.find(p => p.player === playerName && p.commander === commanderName);
-          if (!me) return false;
-
-          const enemies = g.players
-            .filter(p => p.player !== playerName)
-            .map(p => p.commander);
-
-          return vsList.every(v => !v || enemies.includes(v));
-        });
-
-        const wins = filtered.filter(g =>
-          g.players.some(p => p.player === playerName && p.commander === commanderName && p.result)
-        );
-
-        return {
-          games: filtered.length,
-          wins: wins.length,
-          losses: filtered.length - wins.length,
-          wr: filtered.length ? ((wins.length / filtered.length) * 100).toFixed(1) : 0
-        };
-      }
-
-      function getBestWorstMatchups(playerName, deck) {
-        let results = {};
-
-        games.forEach(g => {
-          const me = g.players.find(p => p.player === playerName && p.commander === deck);
-          if (!me) return;
-
-          g.players
-            .filter(p => p.player !== playerName)
-            .forEach(enemy => {
-              if (!results[enemy.commander]) {
-                results[enemy.commander] = { wins: 0, games: 0 };
+              if (player) {
+                if (p.result) player.wins++;
+                else player.losses++;
               }
 
-              results[enemy.commander].games++;
-              if (me.result) results[enemy.commander].wins++;
+              if (cmd) {
+                if (p.result) cmd.wins++;
+                else cmd.losses++;
+              }
             });
-        });
+          });
+        }
 
-        let arr = Object.entries(results).map(([cmd, data]) => {
+        function getDeckStats(playerName, commanderName) {
+          const filtered = games.filter(g =>
+            g.players.some(p => p.player === playerName && p.commander === commanderName)
+          );
+
+          const wins = filtered.filter(g =>
+            g.players.some(p => p.player === playerName && p.commander === commanderName && p.result)
+          );
+
           return {
-            commander: cmd,
-            wr: data.games ? (data.wins / data.games) * 100 : 0,
-            games: data.games
+            games: filtered.length,
+            wins: wins.length,
+            wr: filtered.length ? ((wins.length / filtered.length) * 100).toFixed(1) : 0
           };
-        });
+        }
 
-        arr.sort((a, b) => b.wr - a.wr);
+        function getMatchupStats(playerName, commanderName, vsList) {
+          const filtered = games.filter(g => {
+            const me = g.players.find(p => p.player === playerName && p.commander === commanderName);
+            if (!me) return false;
 
-        return {
-          best: arr[0],
-          worst: arr[arr.length - 1]
-        };
-      }
+            const enemies = g.players
+              .filter(p => p.player !== playerName)
+              .map(p => p.commander);
 
-      function save() {
-        localStorage.setItem("players", JSON.stringify(players));
-        localStorage.setItem("commanders", JSON.stringify(commanders));
-        localStorage.setItem("games", JSON.stringify(games));
-      }
+            return vsList.every(v => !v || enemies.includes(v));
+          });
 
-      function addPlayer() {
-        let name = playerName.value;
-        if (!name) return;
-        players.push({ id: Date.now(), name, wins: 0, losses: 0 });
-        save(); render();
-      }
+          const wins = filtered.filter(g =>
+            g.players.some(p => p.player === playerName && p.commander === commanderName && p.result)
+          );
 
-      function addCommander() {
-        let name = commanderName.value;
-        if (!name) return;
+          return {
+            games: filtered.length,
+            wins: wins.length,
+            losses: filtered.length - wins.length,
+            wr: filtered.length ? ((wins.length / filtered.length) * 100).toFixed(1) : 0
+          };
+        }
 
-        fetch(`https://api.scryfall.com/cards/named?fuzzy=${encodeURIComponent(name)}`)
-          .then(r => r.json())
-          .then(d => {
-            let image = "";
-            if (d.image_uris) { image = d.image_uris.normal; }
-            else if (d.card_faces && d.card_faces[0].image_uris) { image = d.card_faces[0].image_uris.normal; }
+        function triggerImport() {
+          document.getElementById("importFile").click();
+        }
 
-            commanders.push({ id: Date.now(), name: d.name, image, wins: 0, losses: 0 });
-            save(); render();
-          })
-          .catch(() => alert("No encontrado"));
-      }
+        function getMatchupStats(playerName, commanderName, vsList) {
+          const filtered = games.filter(g => {
+            const me = g.players.find(p => p.player === playerName && p.commander === commanderName);
+            if (!me) return false;
 
-      function updatePlayerName(i, name) {
-        players[i].name = name;
-      }
+            const enemies = g.players
+              .filter(p => p.player !== playerName)
+              .map(p => p.commander);
 
-      function render() {
-        recalcStats();
-        let container = document.getElementById("playersList");
-        container.innerHTML = "";
+            return vsList.every(v => !v || enemies.includes(v));
+          });
 
-        players.slice(0, 3).forEach((p, i) => {
+          const wins = filtered.filter(g =>
+            g.players.some(p => p.player === playerName && p.commander === commanderName && p.result)
+          );
 
-          let data = getPlayerImage(p.name);
+          return {
+            games: filtered.length,
+            wins: wins.length,
+            losses: filtered.length - wins.length,
+            wr: filtered.length ? ((wins.length / filtered.length) * 100).toFixed(1) : 0
+          };
+        }
 
-          container.innerHTML += `
+        function getBestWorstMatchups(playerName, deck) {
+          let results = {};
+
+          games.forEach(g => {
+            const me = g.players.find(p => p.player === playerName && p.commander === deck);
+            if (!me) return;
+
+            g.players
+              .filter(p => p.player !== playerName)
+              .forEach(enemy => {
+                if (!results[enemy.commander]) {
+                  results[enemy.commander] = { wins: 0, games: 0 };
+                }
+
+                results[enemy.commander].games++;
+                if (me.result) results[enemy.commander].wins++;
+              });
+          });
+
+          let arr = Object.entries(results).map(([cmd, data]) => {
+            return {
+              commander: cmd,
+              wr: data.games ? (data.wins / data.games) * 100 : 0,
+              games: data.games
+            };
+          });
+
+          arr.sort((a, b) => b.wr - a.wr);
+
+          return {
+            best: arr[0],
+            worst: arr[arr.length - 1]
+          };
+        }
+
+        function save() {
+          localStorage.setItem("players", JSON.stringify(players));
+          localStorage.setItem("commanders", JSON.stringify(commanders));
+          localStorage.setItem("games", JSON.stringify(games));
+        }
+
+        function addPlayer() {
+          let name = playerName.value;
+          if (!name) return;
+          players.push({ id: Date.now(), name, wins: 0, losses: 0 });
+          save(); render();
+        }
+
+        function addCommander() {
+          let name = commanderName.value;
+          if (!name) return;
+
+          fetch(`https://api.scryfall.com/cards/named?fuzzy=${encodeURIComponent(name)}`)
+            .then(r => r.json())
+            .then(d => {
+              let image = "";
+              if (d.image_uris) { image = d.image_uris.normal; }
+              else if (d.card_faces && d.card_faces[0].image_uris) { image = d.card_faces[0].image_uris.normal; }
+
+              commanders.push({ id: Date.now(), name: d.name, image, wins: 0, losses: 0 });
+              save(); render();
+            })
+            .catch(() => alert("No encontrado"));
+        }
+
+        function updatePlayerName(i, name) {
+          players[i].name = name;
+        }
+
+        function render() {
+          recalcStats();
+          let container = document.getElementById("playersList");
+          container.innerHTML = "";
+
+          players.slice(0, 3).forEach((p, i) => {
+
+            let data = getPlayerImage(p.name);
+
+            container.innerHTML += `
   <div class="playerCard">
 
     <div class="avatarContainer" onclick="openPlayerStats('${p.name}')">
@@ -811,7 +979,7 @@
       <img id="card-${i}" class="cardImage" src="">
     </div>
 
-    <div class="playerNameBar" onclick="openPlayerStats('${p.name}')">
+    <div class="playerNameBar">
       <input 
         value="${p.name}" 
         onchange="updatePlayerName(${i}, this.value)"
@@ -827,123 +995,122 @@
   `).join("")}
 </select>
 
-    <div>
-      🏆 <input type="radio" name="winner" value="${p.id}">
-    </div>
+      <div class="winnerBtn" onclick="selectWinner(this, ${p.id})">
+        🏆
+      </div>
 
   </div>
 `;
 
-          let cmd = commanders.find(c => c.id == p.commander);
-          if (cmd) {
-            requestAnimationFrame(() => {
-              let img = document.getElementById(`card-${i}`);
-              if (img) img.src = cmd.image;
+            let cmd = commanders.find(c => c.id == p.commander);
+            if (cmd) {
+              requestAnimationFrame(() => {
+                let img = document.getElementById(`card-${i}`);
+                if (img) img.src = cmd.image;
+              });
+            }
+
+          }); // ← cierra forEach
+
+          renderStats();
+          renderCommanderStats();
+          renderHistory();
+
+        } //  
+
+        function saveGame() {
+          let cards = document.querySelectorAll(".playerCard");
+          let game = { id: Date.now(), date: new Date().toLocaleString(), players: [] };
+
+          cards.forEach(c => {
+            let name = c.querySelector(".playerNameBar input").value;
+            let p = players.find(x => x.name === name);
+            let cmdId = c.querySelector("select").value;
+            let cmd = commanders.find(c => c.id == cmdId);
+            if (!cmd) return;
+            let win = c.querySelector(".winnerBtn")?.classList.contains("active");
+
+            if (win) {
+              p.wins++;
+              if (cmd) cmd.wins++;
+            } else {
+              p.losses++;
+              if (cmd) cmd.losses++;
+            }
+
+            game.players.push({
+              player: p.name,
+              playerId: p.id,
+              commander: cmd.name,
+              commanderId: cmd.id,
+              result: win
             });
-          }
-
-        }); // ← cierra forEach
-
-        renderStats();
-        renderCommanderStats();
-        renderHistory();
-
-      } //  
-
-      function saveGame() {
-        let cards = document.querySelectorAll(".playerCard");
-        let game = { id: Date.now(), date: new Date().toLocaleString(), players: [] };
-
-        cards.forEach(c => {
-          let name = c.querySelector(".playerNameBar input").value;
-          let p = players.find(x => x.name === name);
-          let cmdId = c.querySelector("select").value;
-          let cmd = commanders.find(c => c.id == cmdId);
-          if (!cmd) return;
-          let radio = c.querySelector('input[type="radio"]');
-          let win = radio && radio.checked;
-
-          if (win) {
-            p.wins++;
-            if (cmd) cmd.wins++;
-          } else {
-            p.losses++;
-            if (cmd) cmd.losses++;
-          }
-
-          game.players.push({
-            player: p.name,
-            playerId: p.id,
-            commander: cmd.name,
-            commanderId: cmd.id,
-            result: win
           });
-        });
 
-        games.push(game);
-        save(); render();
-      }
+          games.push(game);
+          save(); render();
+        }
 
-      function renderStats() {
-        let div = document.getElementById("stats");
-        div.innerHTML = "";
+        function renderStats() {
+          let div = document.getElementById("stats");
+          div.innerHTML = "";
 
-        let sorted = [...players].sort((a, b) => b.wins - a.wins).slice(0, 3);
+          let sorted = [...players].sort((a, b) => b.wins - a.wins).slice(0, 3);
 
-        let container = document.createElement("div");
-        container.className = "podium";
+          let container = document.createElement("div");
+          container.className = "podium";
 
-        const medals = ["🥇", "🥈", "🥉"];
+          const medals = ["🥇", "🥈", "🥉"];
 
-        sorted.forEach((p, i) => {
-          let total = p.wins + p.losses;
-          let wr = total ? ((p.wins / total) * 100).toFixed(1) : 0;
+          sorted.forEach((p, i) => {
+            let total = p.wins + p.losses;
+            let wr = total ? ((p.wins / total) * 100).toFixed(1) : 0;
 
-          let card = document.createElement("div");
-          card.className = "podiumCard";
+            let card = document.createElement("div");
+            card.className = "podiumCard";
 
-          card.innerHTML = `
+            card.innerHTML = `
       <div class="medal">${medals[i]}</div>
       <div class="name">${p.name}</div>
       <div class="score">${p.wins}W / ${p.losses}L</div>
       <div class="wr">${wr}% WR</div>
     `;
 
-          container.appendChild(card);
-        });
+            container.appendChild(card);
+          });
 
-        div.appendChild(container);
-      }
-
-      function updateCommander(i, commanderId) {
-        players[i].commander = commanderId;
-
-        let cmd = commanders.find(c => c.id == commanderId);
-        let img = document.getElementById(`card-${i}`);
-
-        if (cmd && img) {
-          img.src = cmd.image;
+          div.appendChild(container);
         }
-      }
 
-      function renderCommanderStats() {
-        let div = document.getElementById("commanderStats");
-        div.innerHTML = "";
+        function updateCommander(i, commanderId) {
+          players[i].commander = commanderId;
 
-        let sorted = [...commanders].sort((a, b) => b.wins - a.wins);
+          let cmd = commanders.find(c => c.id == commanderId);
+          let img = document.getElementById(`card-${i}`);
 
-        let top = sorted.slice(0, 3);
-        let rest = sorted.slice(3);
+          if (cmd && img) {
+            img.src = cmd.image;
+          }
+        }
 
-        // 🥇 TOP 3
-        let topContainer = document.createElement("div");
-        topContainer.className = "commanderTop";
+        function renderCommanderStats() {
+          let div = document.getElementById("commanderStats");
+          div.innerHTML = "";
 
-        top.forEach(c => {
-          let total = c.wins + c.losses;
-          let wr = total ? ((c.wins / total) * 100).toFixed(1) : 0;
+          let sorted = [...commanders].sort((a, b) => b.wins - a.wins);
 
-          topContainer.innerHTML += `
+          let top = sorted.slice(0, 3);
+          let rest = sorted.slice(3);
+
+          // 🥇 TOP 3
+          let topContainer = document.createElement("div");
+          topContainer.className = "commanderTop";
+
+          top.forEach(c => {
+            let total = c.wins + c.losses;
+            let wr = total ? ((c.wins / total) * 100).toFixed(1) : 0;
+
+            topContainer.innerHTML += `
       <div class="commanderCard ${selectedCommanders.has(c.id) ? 'selectedDelete' : ''}" onclick="selectCommander(${c.id})">
         <img src="${c.image}">
         <div>${c.name}</div>
@@ -951,87 +1118,91 @@
         <div>${wr}%</div>
       </div>
     `;
-        });
+          });
 
-        div.appendChild(topContainer);
+          div.appendChild(topContainer);
 
-        // 🃏 RESTO
-        let grid = document.createElement("div");
-        grid.className = "commanderGrid";
+          // 🃏 RESTO
+          let grid = document.createElement("div");
+          grid.className = "commanderGrid";
 
-        rest.forEach(c => {
-          let total = c.wins + c.losses;
-          let wr = total ? ((c.wins / total) * 100).toFixed(1) : 0;
+          rest.forEach(c => {
+            let total = c.wins + c.losses;
+            let wr = total ? ((c.wins / total) * 100).toFixed(1) : 0;
 
-          grid.innerHTML += `
+            grid.innerHTML += `
       <div class="commanderCard ${selectedCommanders.has(c.id) ? 'selectedDelete' : ''}" onclick="selectCommander(${c.id})">
         <img src="${c.image}">
         <div style="font-size:12px">${c.name}</div>
         <div style="font-size:11px">${wr}%</div>
       </div>
     `;
-        });
+          });
 
-        div.appendChild(grid);
-      }
+          div.appendChild(grid);
+        }
 
-      function renderHistory() {
-        let div = document.getElementById("history");
-        div.innerHTML = "";
+        function renderHistory() {
+          let div = document.getElementById("history");
+          div.innerHTML = "";
 
-        games.slice().reverse().forEach(g => {
-          div.innerHTML += `
+          games.slice().reverse().forEach(g => {
+            div.innerHTML += `
       <div class="small">
         ${g.date}
         <button onclick="deleteGame(${g.id})" style="float:right">🗑</button>
       </div>
     `;
 
-          g.players.forEach(p => {
-            div.innerHTML += `<div>${p.player} - ${p.commander} ${p.result ? "🏆" : ""}</div>`;
+            g.players.forEach(p => {
+              div.innerHTML += `<div>${p.player} - ${p.commander} ${p.result ? "🏆" : ""}</div>`;
+            });
+
+            div.innerHTML += "<hr>";
           });
+        }
 
-          div.innerHTML += "<hr>";
-        });
-      }
+        function openPlayerStats(playerName) {
 
-      function openPlayerStats(playerName) {
+          // eliminar si ya existe
+          const old = document.getElementById("statsOverlay");
+          if (old) old.remove();
 
-        // eliminar si ya existe
-        const old = document.getElementById("statsOverlay");
-        if (old) old.remove();
+          const overlay = document.createElement("div");
+          overlay.id = "statsOverlay";
 
-        const overlay = document.createElement("div");
-        overlay.id = "statsOverlay";
+          const popup = document.createElement("div");
+          popup.id = "statsPopup";
 
-        const popup = document.createElement("div");
-        popup.id = "statsPopup";
-
-        popup.innerHTML = `
+          const imgData = getPlayerImage(playerName);
+          popup.style.backgroundImage = `url(${imgData.src})`;
+          popup.style.backgroundSize = "cover";
+          popup.style.backgroundPosition = "85% 15%";
+          popup.innerHTML = `
           <div class="closeBtn" onclick="closeStats()">✖</div>
           <h2>${playerName}</h2>
         `;
 
-        // 🔹 decks usados
-        const decks = [...new Set(
-          games.flatMap(g =>
-            g.players
-              .filter(p => p.player === playerName)
-              .map(p => p.commander)
-          )
-        )];
+          // 🔹 decks usados
+          const decks = [...new Set(
+            games.flatMap(g =>
+              g.players
+                .filter(p => p.player === playerName)
+                .map(p => p.commander)
+            )
+          )];
 
-        decks.forEach(deck => {
+          decks.forEach(deck => {
 
-          const stats = getDeckStats(playerName, deck);
-          const mw = getBestWorstMatchups(playerName, deck);
+            const stats = getDeckStats(playerName, deck);
+            const mw = getBestWorstMatchups(playerName, deck);
 
-          const block = document.createElement("div");
-          block.style.marginBottom = "16px";
-          block.style.padding = "10px";
-          block.style.borderBottom = "1px solid rgba(255,255,255,0.1)";
+            const block = document.createElement("div");
+            block.style.marginBottom = "16px";
+            block.style.padding = "10px";
+            block.style.borderBottom = "1px solid rgba(255,255,255,0.1)";
 
-          block.innerHTML = `
+            block.innerHTML = `
             <strong style="font-size:16px">${deck}</strong><br>
 
             🧾 ${stats.wins}W / ${stats.games}G  
@@ -1058,145 +1229,145 @@
             </div>
           `;
 
-          popup.appendChild(block);
-        });
+            popup.appendChild(block);
+          });
 
-        overlay.appendChild(popup);
-        document.body.appendChild(overlay);
+          overlay.appendChild(popup);
+          document.body.appendChild(overlay);
 
-        // cerrar al hacer click fuera
-        overlay.onclick = (e) => {
-          if (e.target === overlay) closeStats();
-        };
-      }
+          // cerrar al hacer click fuera
+          overlay.onclick = (e) => {
+            if (e.target === overlay) closeStats();
+          };
+        }
 
-      function updateMatchupPopup(playerName, deck, selectEl, index) {
+        function updateMatchupPopup(playerName, deck, selectEl, index) {
 
-        const parent = selectEl.parentElement;
-        const selects = parent.querySelectorAll("select");
+          const parent = selectEl.parentElement;
+          const selects = parent.querySelectorAll("select");
 
-        const vsList = [
-          selects[0].value,
-          selects[1].value
-        ];
+          const vsList = [
+            selects[0].value,
+            selects[1].value
+          ];
 
-        const stats = getMatchupStats(playerName, deck, vsList);
+          const stats = getMatchupStats(playerName, deck, vsList);
 
-        const div = document.getElementById(`popup-${playerName}-${deck}`);
+          const div = document.getElementById(`popup-${playerName}-${deck}`);
 
-        div.innerHTML = `
+          div.innerHTML = `
           → ${stats.wins}W / ${stats.losses}L  
           (${stats.games} partidas · ${stats.wr}%)
         `;
-      }
+        }
 
-      function closeStats() {
-        const overlay = document.getElementById("statsOverlay");
-        if (overlay) overlay.remove();
-}
+        function closeStats() {
+          const overlay = document.getElementById("statsOverlay");
+          if (overlay) overlay.remove();
+        }
 
-      function deleteGame(id) {
-        if (!confirm("¿Eliminar esta partida?")) return;
+        function deleteGame(id) {
+          if (!confirm("¿Eliminar esta partida?")) return;
 
-        let game = games.find(g => g.id === id);
-        if (!game) return;
+          let game = games.find(g => g.id === id);
+          if (!game) return;
 
-        game.players.forEach(p => {
-          let player = players.find(x => x.id === p.playerId) || players.find(x => x.name === p.player);
-          let cmd = commanders.find(c => c.id == p.commanderId);
+          game.players.forEach(p => {
+            let player = players.find(x => x.id === p.playerId) || players.find(x => x.name === p.player);
+            let cmd = commanders.find(c => c.id == p.commanderId);
 
-          if (!cmd && p.commander) {
-            cmd = commanders.find(c => c.name === p.commander);
-          }
+            if (!cmd && p.commander) {
+              cmd = commanders.find(c => c.name === p.commander);
+            }
 
-          if (cmd) {
-            if (p.result) cmd.wins = Math.max(0, cmd.wins - 1);
-            else cmd.losses = Math.max(0, cmd.losses - 1);
-          }
+            if (cmd) {
+              if (p.result) cmd.wins = Math.max(0, cmd.wins - 1);
+              else cmd.losses = Math.max(0, cmd.losses - 1);
+            }
 
-          if (player) {
-            if (p.result) player.wins = Math.max(0, player.wins - 1);
-            else player.losses = Math.max(0, player.losses - 1);
-          }
+            if (player) {
+              if (p.result) player.wins = Math.max(0, player.wins - 1);
+              else player.losses = Math.max(0, player.losses - 1);
+            }
 
-          if (cmd) {
-            if (p.result) cmd.wins = Math.max(0, cmd.wins - 1);
-            else cmd.losses = Math.max(0, cmd.losses - 1);
-          }
-        });
+            if (cmd) {
+              if (p.result) cmd.wins = Math.max(0, cmd.wins - 1);
+              else cmd.losses = Math.max(0, cmd.losses - 1);
+            }
+          });
 
-        games = games.filter(g => g.id !== id);
+          games = games.filter(g => g.id !== id);
 
-        save();
-        render();
-      }
+          save();
+          render();
+        }
 
-      function deleteCommander(id) {
-        if (!confirm("¿Borrar este comandante?")) return;
-        commanders = commanders.filter(c => c.id !== id);
-        save(); render();
-      }
-
-      function exportData() {
-        const data = { players, commanders, games };
-        const blob = new Blob([JSON.stringify(data)], { type: "application/json" });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url; a.download = "mtg-tracker.json"; a.click();
-      }
-
-      function importData(event) {
-        const file = event.target.files[0];
-        if (!file) return;
-        const reader = new FileReader();
-        reader.onload = e => {
-          const data = JSON.parse(e.target.result);
-          players = data.players || [];
-          commanders = data.commanders || [];
-          games = data.games || [];
+        function deleteCommander(id) {
+          if (!confirm("¿Borrar este comandante?")) return;
+          commanders = commanders.filter(c => c.id !== id);
           save(); render();
-        };
-        reader.readAsText(file);
-      }
+        }
 
-      let debounceTimer;
-      function searchCommander() {
-        clearTimeout(debounceTimer);
-        debounceTimer = setTimeout(() => {
-          const query = commanderName.value;
-          const box = document.getElementById("suggestions");
-          if (query.length < 2) { box.innerHTML = ""; return; }
-          fetch(`https://api.scryfall.com/cards/autocomplete?q=${encodeURIComponent(query)}`)
-            .then(r => r.json())
-            .then(data => {
-              const box = document.getElementById("suggestions");
-              box.innerHTML = "";
-              data.data.slice(0, 5).forEach(name => {
-                const div = document.createElement("div");
-                div.textContent = name;
-                div.style.cursor = "pointer";
-                div.style.padding = "6px";
-                div.onclick = () => { commanderName.value = name; box.innerHTML = ""; };
-                box.appendChild(div);
+        function exportData() {
+          const data = { players, commanders, games };
+          const blob = new Blob([JSON.stringify(data)], { type: "application/json" });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url; a.download = "mtg-tracker.json"; a.click();
+        }
+
+        function importData(event) {
+          const file = event.target.files[0];
+          if (!file) return;
+          const reader = new FileReader();
+          reader.onload = e => {
+            const data = JSON.parse(e.target.result);
+            players = data.players || [];
+            commanders = data.commanders || [];
+            games = data.games || [];
+            save(); render();
+          };
+          reader.readAsText(file);
+        }
+
+        let debounceTimer;
+        function searchCommander() {
+          clearTimeout(debounceTimer);
+          debounceTimer = setTimeout(() => {
+            const query = commanderName.value;
+            const box = document.getElementById("suggestions");
+            if (query.length < 2) { box.innerHTML = ""; return; }
+            fetch(`https://api.scryfall.com/cards/autocomplete?q=${encodeURIComponent(query)}`)
+              .then(r => r.json())
+              .then(data => {
+                const box = document.getElementById("suggestions");
+                box.innerHTML = "";
+                data.data.slice(0, 5).forEach(name => {
+                  const div = document.createElement("div");
+                  div.textContent = name;
+                  div.style.cursor = "pointer";
+                  div.style.padding = "6px";
+                  div.onclick = () => { commanderName.value = name; box.innerHTML = ""; };
+                  box.appendChild(div);
+                });
               });
-            });
-        }, 250);
-      }
+          }, 250);
+        }
 
-      function selectCommander(id) {
-        if (!deleteMode) return;
+        function selectCommander(id) {
+          if (!deleteMode) return;
 
-        if (selectedCommanders.has(id)) {
-          selectedCommanders.delete(id);
-        } else {
-          selectedCommanders.add(id);
+          if (selectedCommanders.has(id)) {
+            selectedCommanders.delete(id);
+          } else {
+            selectedCommanders.add(id);
+          }
+
+          render();
         }
 
         render();
-      }
-
-      render();
-    </script>
+      </script>
 
 </body>
 
